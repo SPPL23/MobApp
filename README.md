@@ -38,7 +38,7 @@
 ---
 ## App Preview
 ---
-![MobAppPreview](https://imgur.com/a/1zBV3WQ)
+![MobAppPreview](https://i.imgur.com/3yKGyS0.png)
 ---
 ## Code Snippet
 ---
