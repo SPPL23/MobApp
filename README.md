@@ -36,4 +36,4 @@
 ---
 ## App Preview
 ---
-![MobAppPreview](https://imgur.com/a/xH145yD)
+![MobAppPreview](https://i.imgur.com/5AN4RpZ.png)
