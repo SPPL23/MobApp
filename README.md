@@ -1,6 +1,6 @@
 # MobApp
 ---
-# E-waste Blog
+# E-waste Blog ♻️
 ---
 > [!CAUTION]
 > Following the requirements for our Final Output for Mobile App Development
@@ -33,3 +33,7 @@
 > The third button currently is a placeholder.
 >
 > No concept/idea has been come up yet.
+---
+## App Preview
+---
+![MobAppPreview](https://imgur.com/a/xH145yD)
