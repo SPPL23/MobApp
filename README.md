@@ -32,6 +32,7 @@
 
 > [!TIP]
 > if Player chooses Dispose, the background color will flash green signifying that the answer was correct ✅
+> 
 > if Player chooses Recycle, the background color will flash red signifying that the answer was wrong ❌
 ---
 > [!WARNING]
