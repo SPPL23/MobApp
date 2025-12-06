@@ -19,6 +19,7 @@
 > Example:
 >
 > Enter Player Name: [                                                     ]
+> 
 > ![PlayerName](https://img.shields.io/badge/PLAYER%3A%20playername-blue?style=for-the-badge)
 > 
 > ![Score](https://img.shields.io/badge/SCORE%3A%203-blue?style=for-the-badge)
