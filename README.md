@@ -14,6 +14,7 @@
 > 1. The home page is now an article page which launches a URL to related e-waste articles
 > 2. The game page is now fully functional and can store local data using the sharedPreference module
 > 3. The blank page is now the about page, previous content of the home page is the content of about page
+> 4. Added APK file to the repository *<mark>APK.zip</mark>*
 ---
 > [!IMPORTANT]
 > **Example:**
