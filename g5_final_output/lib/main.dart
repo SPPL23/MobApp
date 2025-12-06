@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'dart:async';
-import 'dart:math';
 
 void main() => runApp(const NavigationBarApp());
 
@@ -45,10 +43,7 @@ class _NavigationExampleState extends State<NavigationExample> {
             icon: Icon(Icons.videogame_asset),
             label: 'Game',
           ),
-          NavigationDestination(
-            icon: Badge(label: Text(''), child: Icon(Icons.messenger_sharp)),
-            label: 'Messages',
-          ),
+          NavigationDestination(icon: Icon(Icons.circle), label: 'Blank'),
         ],
       ),
       body: <Widget>[
@@ -178,71 +173,26 @@ class _NavigationExampleState extends State<NavigationExample> {
           ),
         ),
 
-        /// Notifications page
-        const Padding(
-          padding: EdgeInsets.all(8.0),
-          child: Column(
-            children: <Widget>[
-              Card(
-                child: ListTile(
-                  leading: Icon(Icons.notifications_sharp),
-                  title: Text('Notification 1'),
-                  subtitle: Text('This is a notification'),
-                ),
+        /// Game page
+        Column(
+          children: [
+            Center(
+              child: Text(
+                'Game Page Placeholder',
+                style: theme.textTheme.headlineMedium,
               ),
-              Card(
-                child: ListTile(
-                  leading: Icon(Icons.notifications_sharp),
-                  title: Text('Notification 2'),
-                  subtitle: Text('This is a notification'),
-                ),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
 
-        /// Messages page
-        ListView.builder(
-          reverse: true,
-          itemCount: 2,
-          itemBuilder: (BuildContext context, int index) {
-            if (index == 0) {
-              return Align(
-                alignment: Alignment.centerRight,
-                child: Container(
-                  margin: const EdgeInsets.all(8.0),
-                  padding: const EdgeInsets.all(8.0),
-                  decoration: BoxDecoration(
-                    color: Colors.yellow.shade600,
-                    borderRadius: BorderRadius.circular(8.0),
-                  ),
-                  child: Text(
-                    'Hello',
-                    style: theme.textTheme.bodyLarge!.copyWith(
-                      color: Colors.grey.shade700,
-                    ),
-                  ),
-                ),
-              );
-            }
-            return Align(
-              alignment: Alignment.centerLeft,
-              child: Container(
-                margin: const EdgeInsets.all(8.0),
-                padding: const EdgeInsets.all(8.0),
-                decoration: BoxDecoration(
-                  color: Colors.yellow.shade600,
-                  borderRadius: BorderRadius.circular(8.0),
-                ),
-                child: Text(
-                  'Hi!',
-                  style: theme.textTheme.bodyLarge!.copyWith(
-                    color: Colors.grey.shade700,
-                  ),
-                ),
-              ),
-            );
-          },
+        /// Blank page
+        Scaffold(
+          body: Center(
+            child: Text(
+              'Blank Page Placeholder',
+              style: theme.textTheme.headlineMedium,
+            ),
+          ),
         ),
       ][currentPageIndex],
     );
