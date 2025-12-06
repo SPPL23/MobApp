@@ -4,17 +4,19 @@
 ---
 > [!CAUTION]
 > Following the requirements for our Final Output for Mobile App Development
+> 
 > The group is required to create an APP that is either related to the previous Mid Terms Output or another SDG *Sustainable Development Goals*
+> 
 > Make sure to run flutter pub get or flutter pub update in order for the imported modules to work with the code
 ---
-> [!NOTES]
+> [!NOTE]
 > Currently, the mobile app has 3 navigation buttons at the bottom.
-> 1. The main page currently exists, but only contains Cards, and Strings of random facts/trivia about E-Waste
+> 1. The home page is now an article page which launches a URL to related e-waste articles
 > 2. The game page is now fully functional and can store local data using the sharedPreference module
-> 3. Blank page is still empty, trying to come up with ideas to display on Blank page
+> 3. The blank page is now the about page, previous content of the home page is the content of about page
 ---
 > [!IMPORTANT]
-> Example:
+> **Example:**
 >
 > Enter Player Name: [                                                     ]
 > 
@@ -33,18 +35,13 @@
 > 
 > if Player chooses Recycle, the background color will flash red signifying that the answer was wrong ❌
 ---
-> [!WARNING]
-> The third button currently is a placeholder.
->
-> No concept/idea has been come up yet.
----
 ## App Preview
 ---
-![MobAppPreview](https://i.imgur.com/5AN4RpZ.png)
+![MobAppPreview](https://imgur.com/a/1zBV3WQ)
 ---
 ## Code Snippet
 ---
-## Updated Game Page by adding a new callable class inside main class
+## Full Copy-Pastable Code
 ## 12/6/2025
 ---
 > ```
@@ -52,6 +49,7 @@
 > import 'dart:math';
 > import 'package:flutter/material.dart';
 > import 'package:shared_preferences/shared_preferences.dart';
+> import 'package:url_launcher/url_launcher.dart';
 > 
 > void main() => runApp(const NavigationBarApp());
 > 
@@ -76,7 +74,6 @@
 > 
 >   @override
 >   Widget build(BuildContext context) {
->     final ThemeData theme = Theme.of(context);
 >     return Scaffold(
 >       bottomNavigationBar: NavigationBar(
 >         onDestinationSelected: (int index) {
@@ -96,23 +93,32 @@
 >             icon: Icon(Icons.videogame_asset),
 >             label: 'Game',
 >           ),
->           NavigationDestination(icon: Icon(Icons.circle), label: 'Blank'),
+>           NavigationDestination(
+>             icon: Icon(Icons.question_mark),
+>             label: 'About',
+>           ),
 >         ],
 >       ),
 >       body: <Widget>[
 >         /// Home page
+>         NewsFeedPage2(),
+> 
+>         /// Game page
+>         GamePage(),
+> 
+>         /// About page
 >         SingleChildScrollView(
 >           child: Column(
 >             children: <Widget>[
 >               Card(
+>                 color: Colors.yellow.shade900,
 >                 child: ListTile(
->                   tileColor: Colors.amber.shade200,
 >                   leading: const Icon(Icons.home),
 >                   title: Text(
 >                     'E-Waste Awareness Blog',
 >                     textAlign: TextAlign.center,
 >                     style: TextStyle(
->                       fontSize: 24,
+>                       fontSize: 34,
 >                       fontWeight: FontWeight.bold,
 >                       color: Colors.grey.shade800,
 >                     ),
@@ -205,19 +211,6 @@
 >                 ),
 >               ),
 >             ],
->           ),
->         ),
-> 
->         /// Game page
->         GamePage(),
-> 
->         /// Blank page
->         Scaffold(
->           body: Center(
->             child: Text(
->               'Blank Page Placeholder',
->               style: theme.textTheme.headlineMedium,
->             ),
 >           ),
 >         ),
 >       ][currentPageIndex],
@@ -458,4 +451,192 @@
 >     );
 >   }
 > }
+> 
+> class NewsFeedPage2 extends StatelessWidget {
+>   const NewsFeedPage2({super.key});
+> 
+>   Future<void> _launchURL(String url) async {
+>     final Uri uri = Uri.parse(url);
+>     if (!await launchUrl(uri, mode: LaunchMode.externalApplication)) {
+>       throw Exception('Could not launch $url');
+>     }
+>   }
+> 
+>   @override
+>   Widget build(BuildContext context) {
+>     return Scaffold(
+>       body: Center(
+>         child: Container(
+>           constraints: const BoxConstraints(maxWidth: 400),
+>           child: ListView.builder(
+>             itemCount: _articles.length,
+>             itemBuilder: (BuildContext context, int index) {
+>               final item = _articles[index];
+>               return InkWell(
+>                 onTap: () {
+>                   if (item.url.isNotEmpty) {
+>                     _launchURL(item.url);
+>                   } else {
+>                     ScaffoldMessenger.of(context).showSnackBar(
+>                       const SnackBar(
+>                         content: Text("No link available for this article"),
+>                       ),
+>                     );
+>                   }
+>                 },
+>                 child: Container(
+>                   height: 136,
+>                   margin: const EdgeInsets.symmetric(
+>                     horizontal: 16,
+>                     vertical: 8.0,
+>                   ),
+>                   decoration: BoxDecoration(
+>                     border: Border.all(color: const Color(0xFFE0E0E0)),
+>                     borderRadius: BorderRadius.circular(8.0),
+>                   ),
+>                   padding: const EdgeInsets.all(8),
+>                   child: Row(
+>                     children: [
+>                       Expanded(
+>                         child: Column(
+>                           mainAxisAlignment: MainAxisAlignment.center,
+>                           crossAxisAlignment: CrossAxisAlignment.start,
+>                           children: [
+>                             Text(
+>                               item.title,
+>                               style: const TextStyle(
+>                                 fontWeight: FontWeight.bold,
+>                               ),
+>                               maxLines: 2,
+>                               overflow: TextOverflow.ellipsis,
+>                             ),
+>                             const SizedBox(height: 8),
+>                             Text(
+>                               "${item.author} · ${item.postedOn}",
+>                               style: Theme.of(context).textTheme.bodySmall,
+>                             ),
+>                             const SizedBox(height: 8),
+>                             Row(
+>                               mainAxisSize: MainAxisSize.min,
+>                               children:
+>                                   [
+>                                     Icons.bookmark_border_rounded,
+>                                     Icons.share,
+>                                     Icons.more_vert,
+>                                   ].map((e) {
+>                                     return InkWell(
+>                                       onTap: () {
+>                                         if (item.url.isNotEmpty) {
+>                                           _launchURL(item.url);
+>                                         }
+>                                       },
+>                                       child: Padding(
+>                                         padding: const EdgeInsets.only(
+>                                           right: 8.0,
+>                                         ),
+>                                         child: Icon(e, size: 16),
+>                                       ),
+>                                     );
+>                                   }).toList(),
+>                             ),
+>                           ],
+>                         ),
+>                       ),
+>                       Container(
+>                         width: 100,
+>                         height: 100,
+>                         decoration: BoxDecoration(
+>                           borderRadius: BorderRadius.circular(8.0),
+>                           image: DecorationImage(
+>                             fit: BoxFit.cover,
+>                             image: NetworkImage(item.imageUrl),
+>                           ),
+>                         ),
+>                       ),
+>                     ],
+>                   ),
+>                 ),
+>               );
+>             },
+>           ),
+>         ),
+>       ),
+>     );
+>   }
+> }
+> 
+> class Article {
+>   final String title;
+>   final String imageUrl;
+>   final String author;
+>   final String postedOn;
+>   final String url;
+> 
+>   Article({
+>     required this.title,
+>     required this.imageUrl,
+>     required this.author,
+>     required this.postedOn,
+>     required this.url,
+>   });
+> }
+> 
+> final List<Article> _articles = [
+>   Article(
+>     title: "Electronic waste (e-waste)",
+>     author: "World Health Organization (WHO)",
+>     imageUrl:
+>         "https://cdn.pixabay.com/photo/2015/09/22/20/46/e-waste-952438_1280.jpg",
+>     postedOn: "Yesterday",
+>     url:
+>         "https://www.who.int/news-room/fact-sheets/detail/electronic-waste-(e-waste)",
+>   ),
+>   Article(
+>     title: "The Growing Environmental Risks of E-Waste",
+>     imageUrl:
+>         "https://cdn.pixabay.com/photo/2021/01/30/14/23/man-5963976_1280.jpg",
+>     author: "Geneva Environment Network",
+>     postedOn: "4 hours ago",
+>     url:
+>         "https://www.genevaenvironmentnetwork.org/resources/updates/the-growing-environmental-risks-of-e-waste/",
+>   ),
+>   Article(
+>     title: "The Environmental Impact of E-Waste",
+>     author: "Earth.Org",
+>     imageUrl:
+>         "https://earth.org/wp-content/uploads/2023/03/Untitled-683-%C3%97-1024px-1024-%C3%97-683px-32.jpg.webp",
+>     postedOn: "2 days ago",
+>     url: "https://earth.org/environmental-impact-of-e-waste/",
+>   ),
+>   Article(
+>     title: "Electronic waste | Recycling, Disposal & Impact",
+>     author: "Britanigga",
+>     imageUrl:
+>         "https://cdn.pixabay.com/photo/2021/01/30/14/23/e-waste-5963979_960_720.jpg",
+>     postedOn: "22 hours ago",
+>     url: "https://www.britannica.com/technology/electronic-waste",
+>   ),
+>   Article(
+>     title:
+>         "Panasonic's 25-megapixel GH6 is the highest resolution Micro Four Thirds camera yet",
+>     author: "Polygon",
+>     imageUrl: "https://picsum.photos/id/1020/960/540",
+>     postedOn: "2 hours ago",
+>     url: "",
+>   ),
+>   Article(
+>     title: "Samsung Galaxy S22 Ultra charges strangely slowly",
+>     author: "TechRadar",
+>     imageUrl: "https://picsum.photos/id/1021/960/540",
+>     postedOn: "10 days ago",
+>     url: "",
+>   ),
+>   Article(
+>     title: "Snapchat unveils real-time location sharing",
+>     author: "Fox Business",
+>     imageUrl: "https://picsum.photos/id/1060/960/540",
+>     postedOn: "10 hours ago",
+>     url: "",
+>   ),
+> ];
 > ```
