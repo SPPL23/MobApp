@@ -20,9 +20,13 @@
 >
 > Enter Player Name: [                                                     ]
 > ![PlayerName](https://img.shields.io/badge/PLAYER%3A%20playername-blue?style=for-the-badge)
+> 
 > ![Score](https://img.shields.io/badge/SCORE%3A%203-blue?style=for-the-badge)
+> 
 > ![Attempts](https://img.shields.io/badge/ATTEMPTS%3A%203%2F3-blue?style=for-the-badge)
+> 
 > ![CurrentWord](https://img.shields.io/badge/Diaper-yellow?style=for-the-badge)
+> 
 > ![Dispose](https://img.shields.io/badge/Dispose-red?style=for-the-badge) ![Recycle](https://img.shields.io/badge/Recycle-green?style=for-the-badge)
 >
 > [!TIP]
